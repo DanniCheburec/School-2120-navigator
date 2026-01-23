@@ -332,15 +332,72 @@ if route_svg_elements:
     svg = svg.replace("</svg>", f"{route_svg_elements}</svg>")
 
 final_html = f"""
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
 {combined_styles}
-<div id="capture" style="width:100%; height:75vh; border-radius:16px; overflow:hidden; border:1px solid #ddd; background:white;">
+
+<div style="margin-bottom: 10px;">
+    <button onclick="downloadRoute()" id="btnSave" style="
+        padding: 12px 24px; 
+        background-color: #FF4B4B; 
+        color: white; 
+        border: none; 
+        border-radius: 8px; 
+        cursor: pointer;
+        font-family: sans-serif;
+    ">💾 Сохранить PNG</button>
+</div>
+
+<div id="capture" style="width:100%; height:70vh; border-radius:16px; overflow:hidden; border:1px solid #ddd; background:white;">
     {svg}
 </div>
+
 <script>
-    // Скрипт для принудительного масштабирования
-    const svg = document.querySelector('svg');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', '100%');
+    async function downloadRoute() {{
+        const btn = document.getElementById('btnSave');
+        
+        // ПРОВЕРКА: Загрузилась ли библиотека?
+        if (typeof html2canvas === 'undefined') {{
+            alert("Библиотека еще загружается. Подождите 2 секунды...");
+            return;
+        }}
+
+        btn.innerText = "Обработка...";
+        btn.disabled = true;
+
+        try {{
+            const element = document.getElementById('capture');
+            
+            // Настройка для корректного рендеринга SVG
+            const canvas = await html2canvas(element, {{
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: "#ffffff",
+                logging: false
+            }});
+
+            const link = document.createElement('a');
+            link.download = 'marshrute_2120.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            btn.innerText = "✅ Готово";
+        }} catch (err) {{
+            console.error(err);
+            alert("Ошибка: " + err.message);
+            btn.innerText = "❌ Ошибка";
+        }} finally {{
+            setTimeout(() => {{
+                btn.innerText = "💾 Сохранить PNG";
+                btn.disabled = false;
+            }}, 2000);
+        }}
+    }}
 </script>
 """
-components.html(final_html, height=700)
+
+
+components.html(final_html, height=800, scrolling=False)
+
