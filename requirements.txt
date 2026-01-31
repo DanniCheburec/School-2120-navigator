@@ -1,2 +1,5 @@
 streamlit
 networkx
+requests
+python-dotenv
+imap-tools
