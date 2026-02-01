@@ -95,7 +95,7 @@ st.session_state.setdefault("user", None)
 
 if st.session_state.auth_mode != "logged":
 
-    st.title("Навигатор школы 2120")
+    st.title("Интерактивная карта школы 2120 Ш6")
 
     col1, col2, col3 = st.columns(3)
 
