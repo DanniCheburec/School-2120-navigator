@@ -8,7 +8,7 @@ import requests
 
 
 def send_telegram_message(chat_id, message):
-    url = f"https://api.telegram.org/bot7237678765:AAFDdz906uHKoJYhSYG5SMNgH547OCZdw8g/sendMessage"
+    url = f"https://api.telegram.org/bot8135147371:AAH_hFq6nKigcqs-DUjMK3phMltauABPmd8/sendMessage"
     params = {"chat_id": chat_id, "text": message}
     response = requests.get(url, params=params)
     return response.json()
@@ -617,4 +617,5 @@ final_html = f"""
 
 
 components.html(final_html, height=800, scrolling=False)
+
 
