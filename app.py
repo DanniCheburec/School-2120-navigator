@@ -86,6 +86,17 @@ st.set_page_config(
     layout="wide"
 )
 
+def show_mobile_hint():
+    st.markdown(
+        """
+        <div class="mobile-hint">
+            ↑ Панель навигации скрыта слева сверху. 
+            Нажмите на значок " >> ", чтобы открыть меню.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
 st.session_state.setdefault("current_path", None)
 st.session_state.setdefault("floor_control", 1)
 st.session_state.setdefault("qr_start", None)
@@ -174,6 +185,23 @@ if st.session_state.user is None:
     st.stop()
 
 
+st.markdown(
+    """
+    <style>
+    @media (max-width: 768px) {
+        .mobile-hint {
+            background: #ffe9c6;
+            color: #333;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 def load_data_from_db(db_path: str):
@@ -336,6 +364,10 @@ def sync_floor_with_start():
     node_id = start_nodes[0]
     st.session_state.floor_control = G.nodes[node_id]["floor"]
     st.session_state.current_path = None
+
+if "mobile_hint_shown" not in st.session_state:
+    show_mobile_hint()
+    st.session_state["mobile_hint_shown"] = True
 
 with st.sidebar:
     st.title("Навигация")
@@ -617,5 +649,6 @@ final_html = f"""
 
 
 components.html(final_html, height=800, scrolling=False)
+
 
 
