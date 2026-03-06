@@ -4,11 +4,15 @@ import networkx as nx
 import streamlit.components.v1 as components
 import hashlib
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 
 def send_telegram_message(chat_id, message):
-    url = f"https://api.telegram.org/bot8135147371:AAH_hFq6nKigcqs-DUjMK3phMltauABPmd8/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     params = {"chat_id": chat_id, "text": message}
     response = requests.get(url, params=params)
     return response.json()
@@ -649,6 +653,5 @@ final_html = f"""
 
 
 components.html(final_html, height=800, scrolling=False)
-
 
 
