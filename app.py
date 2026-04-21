@@ -859,7 +859,7 @@ st.markdown("""
 div[data-testid="stPopover"] {
     position: fixed !important;
     right: 24px !important;
-    bottom: 80px !important; /* Увеличьте это значение, чтобы поднять кнопку выше */
+    bottom: 100px !important; /* Увеличьте это значение, чтобы поднять кнопку выше */
     left: auto !important;
     width: auto !important;
     z-index: 9999;
