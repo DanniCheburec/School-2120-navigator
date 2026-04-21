@@ -855,34 +855,36 @@ if "chat_history" not in st.session_state:
 
 st.markdown("""
 <style>
-/* Контейнер popoover — прибиваем в правый нижний угол */
+/* Контейнер popover — поднимаем выше за счет изменения bottom */
 div[data-testid="stPopover"] {
     position: fixed !important;
     right: 24px !important;
-    bottom: 24px !important;
+    bottom: 80px !important; /* Увеличьте это значение, чтобы поднять кнопку выше */
     left: auto !important;
     width: auto !important;
     z-index: 9999;
 }
-/* Сама кнопка — круглая */
+
+/* Сама кнопка — меняем цвет на оранжевый */
 div[data-testid="stPopover"] > button {
     width: 56px !important;
     height: 56px !important;
     border-radius: 50% !important;
-    background: #4B57FF !important;
+    background: #FF8C00 !important; /* Насыщенный оранжевый */
     color: white !important;
     font-size: 22px !important;
     padding: 0 !important;
     border: none !important;
-    box-shadow: 0 4px 20px rgba(75,87,255,0.45) !important;
+    /* Тень тоже лучше сделать теплой под цвет кнопки */
+    box-shadow: 0 4px 20px rgba(255, 140, 0, 0.45) !important;
+    transition: all 0.3s ease; /* Плавный переход для ховера */
 }
+
+/* Эффект при наведении — делаем оранжевый чуть темнее */
 div[data-testid="stPopover"] > button:hover {
-    background: #3a45d4 !important;
+    background: #E67E00 !important; 
     transform: scale(1.08);
-}
-/* Убираем текст "?" лейбл рядом с кнопкой если есть */
-div[data-testid="stPopover"] > button p {
-    display: none !important;
+    box-shadow: 0 6px 25px rgba(255, 140, 0, 0.6) !important;
 }
 </style>
 """, unsafe_allow_html=True)
